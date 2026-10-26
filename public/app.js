@@ -74,7 +74,10 @@ function cardHtml(s, i) {
     <div class="face front">
       <p class="chan"><span class="dot"></span>${escapeHtml(s.chLabel)}</p>
       <div class="front-body">
-        <p class="bubble">${escapeHtml(s.hook)}</p>
+        <div class="msg">
+          <div class="avatar">${scamFace(s.id)}</div>
+          <p class="bubble">${escapeHtml(s.hook)}</p>
+        </div>
         ${variants}
       </div>
       <div class="front-foot">

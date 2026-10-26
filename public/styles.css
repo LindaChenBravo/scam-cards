@@ -18,6 +18,11 @@
 
   --g1:#b8321f; --g2:#b5446e; --g3:#b06a16; --g4:#2f5d8f; --g5:#7a4ea8;
   --g6:#a1591c; --g7:#2b6e74; --g8:#56762a; --g9:#9a5a2b; --g10:#4a4fa0;
+
+  /* 角色固定用這組，不隨深淺色切換，避免插畫在深色模式糊掉 */
+  --face-ink: #2b2521;
+  --face-skin: #f7d2ae;
+  --face-hair: #4a3a2f;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -227,8 +232,19 @@ main { padding: 28px 0 64px; }
 
 .front-body { margin: auto 0; }
 
+.msg { display: flex; align-items: flex-start; gap: 11px; }
+
+.avatar {
+  flex: 0 0 54px; width: 54px; height: 54px;
+  border-radius: 50%; overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.face-svg { display: block; width: 100%; height: 100%; }
+
 .bubble {
   margin: 0;
+  flex: 1 1 auto; min-width: 0;
   position: relative;
   max-width: 100%;
   padding: 18px 20px;
@@ -242,9 +258,9 @@ main { padding: 28px 0 64px; }
   text-wrap: pretty;
 }
 .bubble::after {
-  content: ""; position: absolute; left: 18px; bottom: -8px;
-  width: 14px; height: 14px; background: inherit;
-  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  content: ""; position: absolute; left: -7px; top: 19px;
+  width: 13px; height: 13px; background: inherit;
+  border-left: 1px solid var(--line); border-bottom: 1px solid var(--line);
   transform: rotate(45deg);
 }
 .card[data-ch="call"] .bubble,
@@ -254,6 +270,8 @@ main { padding: 28px 0 64px; }
 .card[data-ch="call"] .bubble::after,
 .card[data-ch="parcel"] .bubble::after,
 .card[data-ch="web"] .bubble::after,
+.card[data-ch="ad"] .bubble::after,
+.card[data-ch="email"] .bubble::after,
 .card[data-ch="video"] .bubble::after { display: none; }
 
 .front-foot {
@@ -377,6 +395,8 @@ main { padding: 28px 0 64px; }
   .masthead { padding: 36px 0 28px; }
   .br-m { display: none; }
   .grid { grid-template-columns: 1fr; gap: 14px; }
+  .avatar { flex-basis: 48px; width: 48px; height: 48px; }
+  .msg { gap: 9px; }
   .toolbar-inner { padding-top: 10px; padding-bottom: 10px; }
   .chips { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }
   .chips::-webkit-scrollbar { display: none; }

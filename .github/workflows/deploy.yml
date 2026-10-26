@@ -32,11 +32,12 @@ jobs:
           V="${GITHUB_SHA::8}"
           sed -i \
             -e "s|href=\"styles\.css\"|href=\"styles.css?v=$V\"|" \
+            -e "s|src=\"characters\.js\"|src=\"characters.js?v=$V\"|" \
             -e "s|src=\"data\.js\"|src=\"data.js?v=$V\"|" \
             -e "s|src=\"app\.js\"|src=\"app.js?v=$V\"|" \
             public/index.html
           echo "--- 戳記結果 ---"
-          grep -E 'styles\.css|data\.js|app\.js' public/index.html
+          grep -E 'styles\.css|characters\.js|data\.js|app\.js' public/index.html
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
