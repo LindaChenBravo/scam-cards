@@ -22,6 +22,22 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+
+      # index.html 會隨每次部署更新，但 data.js / app.js / styles.css 的網址不變，
+      # 瀏覽器會沿用舊快取，造成「新頁面配舊資料」。這裡在部署產物上補一個
+      # 以 commit SHA 為值的版號，讓內容一改網址就改，快取自然失效。
+      # 只改部署產物，原始檔不動，本機開發維持乾淨網址。
+      - name: Stamp asset URLs with commit SHA
+        run: |
+          V="${GITHUB_SHA::8}"
+          sed -i \
+            -e "s|href=\"styles\.css\"|href=\"styles.css?v=$V\"|" \
+            -e "s|src=\"data\.js\"|src=\"data.js?v=$V\"|" \
+            -e "s|src=\"app\.js\"|src=\"app.js?v=$V\"|" \
+            public/index.html
+          echo "--- 戳記結果 ---"
+          grep -E 'styles\.css|data\.js|app\.js' public/index.html
+
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
