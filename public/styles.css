@@ -190,6 +190,7 @@ main { padding: 28px 0 64px; }
 
 .card {
   position: relative;
+  container-type: inline-size;
   height: var(--card-h);
   perspective: 1400px;
   cursor: pointer;
@@ -250,7 +251,7 @@ main { padding: 28px 0 64px; }
   border-radius: 18px;
   background: var(--surface-2);
   border: 1px solid var(--line);
-  font-size: clamp(21px, 2.9vw, 27px);
+  font-size: 22px;
   line-height: 1.5;
   font-weight: 700;
   letter-spacing: -.01em;
@@ -262,6 +263,11 @@ main { padding: 28px 0 64px; }
   border-left: 1px solid var(--line); border-top: 1px solid var(--line);
   transform: rotate(45deg);
 }
+/* 卡片夠寬時話術才放大。依容器而非視窗，避免三欄窄卡字體過大 */
+@container (min-width: 430px) {
+  .bubble { font-size: 26px; }
+}
+
 .card[data-ch="call"] .bubble,
 .card[data-ch="parcel"] .bubble,
 .card[data-ch="web"] .bubble,
