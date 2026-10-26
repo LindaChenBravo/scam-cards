@@ -50,14 +50,25 @@ cd scam-cards && npx wrangler deploy
 | `stat` | 背面 | 數據佐證 |
 | `src` | 背面 | 資料來源代號陣列，對應 `SRC`，釘在卡背底部不會被捲動蓋住 |
 
-卡片正反面等高（`--card-h`，桌機 560px、手機 570px）。加長文案前先確認背面不會溢出：
-開發者工具 Console 執行
+卡片正反面等高（`--card-h`，目前 580px），而且**正面通常才是比較高的那一面**（大頭像 + 話術 + 其他話術）。
+加長任何文案前，先在 Console 量一次兩面實際需要的高度：
 
 ```js
-[...document.querySelectorAll('.back-scroll')].filter(s => s.scrollHeight > s.clientHeight).length
+const st = document.createElement('style');
+st.textContent = '.back-scroll{flex:none!important;height:auto!important;overflow:visible!important}.card{height:auto!important}.face{position:static!important}.card-inner{transform:none!important}';
+document.head.appendChild(st);
+const cs = [...document.querySelectorAll('.card')];
+console.log({
+  front: Math.max(...cs.map(c => c.querySelector('.front').offsetHeight)),
+  back:  Math.max(...cs.map(c => c.querySelector('.back').offsetHeight)),
+  cardH: cs[0].offsetHeight
+});
+st.remove();
 ```
 
-結果應為 `0`。若不為 0，縮短 `summary` 或 `tell`，或調高 `--card-h`。
+`front` 和 `back` 都要小於 `cardH`，否則內容會被裁掉（卡片 `overflow: hidden`，不會跳出捲軸提醒你）。
+
+另外 `grid` 的 `minmax` 下限是 340px：低於這個寬度正面會爆版，所以窄視窗會直接退成單欄，而不是擠出兩個窄欄。改這個值前先跑上面的量測。
 
 ## 角色
 

@@ -14,7 +14,7 @@
   --shadow: 0 1px 2px rgba(27,26,24,.05), 0 8px 24px rgba(27,26,24,.07);
   --shadow-lift: 0 2px 4px rgba(27,26,24,.06), 0 16px 40px rgba(27,26,24,.12);
   --radius: 16px;
-  --card-h: 560px;
+  --card-h: 580px;
 
   --g1:#b8321f; --g2:#b5446e; --g3:#b06a16; --g4:#2f5d8f; --g5:#7a4ea8;
   --g6:#a1591c; --g7:#2b6e74; --g8:#56762a; --g9:#9a5a2b; --g10:#4a4fa0;
@@ -181,7 +181,7 @@ main { padding: 28px 0 64px; }
 
 .grid {
   display: grid; gap: 18px;
-  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
 }
 
 .empty { padding: 48px 0; text-align: center; color: var(--ink-3); }
@@ -230,12 +230,12 @@ main { padding: 28px 0 64px; }
   background: var(--gc, var(--ink-3));
 }
 
-.front-body { margin: auto 0; }
+.front-body { margin: 14px 0 0; }
 
-.msg { display: flex; align-items: flex-start; gap: 11px; }
+.msg { display: flex; flex-direction: column; align-items: flex-start; }
 
 .avatar {
-  flex: 0 0 54px; width: 54px; height: 54px;
+  width: 116px; height: 116px; margin-bottom: 14px;
   border-radius: 50%; overflow: hidden;
   background: var(--surface-2);
   border: 1px solid var(--line);
@@ -244,23 +244,22 @@ main { padding: 28px 0 64px; }
 
 .bubble {
   margin: 0;
-  flex: 1 1 auto; min-width: 0;
+  width: 100%; min-width: 0;
   position: relative;
-  max-width: 100%;
   padding: 18px 20px;
   border-radius: 18px;
   background: var(--surface-2);
   border: 1px solid var(--line);
-  font-size: clamp(20px, 2.6vw, 25px);
+  font-size: clamp(21px, 2.9vw, 27px);
   line-height: 1.5;
   font-weight: 700;
   letter-spacing: -.01em;
   text-wrap: pretty;
 }
 .bubble::after {
-  content: ""; position: absolute; left: -7px; top: 19px;
+  content: ""; position: absolute; left: 44px; top: -7px;
   width: 13px; height: 13px; background: inherit;
-  border-left: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  border-left: 1px solid var(--line); border-top: 1px solid var(--line);
   transform: rotate(45deg);
 }
 .card[data-ch="call"] .bubble,
@@ -275,7 +274,7 @@ main { padding: 28px 0 64px; }
 .card[data-ch="video"] .bubble::after { display: none; }
 
 .front-foot {
-  padding-top: 16px;
+  margin-top: auto; padding-top: 16px;
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
   border-top: 1px dashed var(--line);
 }
@@ -391,12 +390,11 @@ main { padding: 28px 0 64px; }
 /* ---------- responsive ---------- */
 
 @media (max-width: 620px) {
-  :root { --card-h: 570px; }
   .masthead { padding: 36px 0 28px; }
   .br-m { display: none; }
   .grid { grid-template-columns: 1fr; gap: 14px; }
-  .avatar { flex-basis: 48px; width: 48px; height: 48px; }
-  .msg { gap: 9px; }
+  .avatar { width: 104px; height: 104px; margin-bottom: 12px; }
+  .bubble::after { left: 40px; }
   .toolbar-inner { padding-top: 10px; padding-bottom: 10px; }
   .chips { order: 3; width: 100%; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 2px; }
   .chips::-webkit-scrollbar { display: none; }
